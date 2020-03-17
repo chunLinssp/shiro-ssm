@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "org.shiro.maven.mapper.FinancialMapper">
+
+
+    <insert id="saveFinancial">
+        insert into financial_msg(peo_id,
+        std_award,
+        real_money,
+        get_time
+        )values
+        <foreach collection="list" item="item" separator="," close=";">
+            (#{item.peo_id},#{item.std_award},#{item.real_money},#{item.get_time})
+        </foreach>
+
+    </insert>
+    <update id="updateFinancial">
+        update financial_msg
+        <trim prefix="set" suffixOverrides=",">
+            <if test="std_award!=null">std_award = #{std_award},</if>
+            <if test="real_money!=null">real_money = #{real_money},</if>
+            <if test="get_time!=null">get_time = #{get_time},</if>
+        </trim>
+        where peo_id = #{peo_id}
+    </update>
+    <delete id="deleteById">
+        delete from financial_msg where peo_id = #{id}
+    </delete>
+    <select id="findAll" resultType="org.shiro.maven.po.Financial">
+        select * from financial_msg
+    </select>
+    <select id="findById" resultType="org.shiro.maven.po.Financial">
+         select * from financial_msg where peo_id = #{id}
+    </select>
+    <select id="findAllFinancialVo" resultMap="financialVoMap">
+        SELECT
+           per.id,per.post_name,fmsg.std_award,fmsg.real_money,fmsg.get_time
+        FROM
+        personinf per
+        INNER JOIN financial_msg fmsg ON per.id = fmsg.peo_id
+    </select>
+
+    <resultMap id="financialVoMap" type="org.shiro.maven.vo.FinancialVo">
+        <result property="id" column="id" jdbcType="INTEGER"></result>
+        <result property="std_award" column="std_award" jdbcType="DECIMAL"></result>
+        <result property="post_name" column="post_name" jdbcType="VARCHAR"></result>
+        <result property="get_time" column="get_time" jdbcType="DATE"></result>
+        <result property="real_money" column="real_money" jdbcType="DECIMAL"></result>
+    </resultMap>
+
+
+
+</mapper>

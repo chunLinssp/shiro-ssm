@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "org.shiro.maven.mapper.TransferMapper">
+
+
+    <insert id="saveTransfer">
+        insert into transfer(peo_id,
+        result,
+        goal_depid,
+        effdate,
+        applydate,
+        status
+        )values(
+        #{peo_id},#{result},#{goal_depid},#{effdate},#{applydate},#{status}
+        )
+    </insert>
+    <update id="updateTransfer">
+        update transfer
+        <trim prefix="set" suffixOverrides=",">
+            <if test="peo_id!=null">peo_id = #{peo_id},</if>
+            <if test="result!=null">result = #{result},</if>
+            <if test="goal_depid!=null">goal_depid = #{goal_depid},</if>
+            <if test="effdate!=null">effdate = #{effdate},</if>
+            <if test="applydate!=null">applydate = #{applydate},</if>
+            <if test="status!=null">status = #{status},</if>
+        </trim>
+        where peo_id = #{id}
+
+    </update>
+    <update id="checkTransfer">
+        update transfer set state = #{state} where id = #{id};
+    </update>
+    <select id="findAll" resultType="org.shiro.maven.po.Transfer">
+        select * from transfer
+    </select>
+
+</mapper>

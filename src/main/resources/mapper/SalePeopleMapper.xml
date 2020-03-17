@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "org.shiro.maven.mapper.SalePeopleMapper">
+
+    <insert id="saveSale">
+        insert into sale_peo(
+            peo_id,
+            sale_sum,
+            create_time
+        )values
+        <foreach collection="list" item="item"  separator="," close=";">
+            (#{item.peo_id}, #{sale_sum},#{create_time})
+        </foreach>
+
+    </insert>
+    <select id="findTop5AsMonth" resultType="org.shiro.maven.vo.SalePeopleVo">
+        SELECT
+        pf.id as id,
+        pf.name as name ,
+        pf.sex as sex,
+        spe.sale_sum as sale_num,
+        pf.post_name as post_name
+        FROM
+        sale_peo  spe RIGHT JOIN personinf pf on spe.peo_id = pf.id
+        WHERE
+        DATEDIFF(now(), create_time) &lt;= 30
+        ORDER BY
+        sale_sum DESC
+        LIMIT 5
+    </select>
+    <select id="findTop5AsWeekend" resultType="org.shiro.maven.vo.SalePeopleVo">
+        SELECT
+        pf.id as id,
+        pf.name as name ,
+        pf.sex as sex,
+        spe.sale_sum as sale_num,
+        pf.post_name as post_name
+        FROM
+        sale_peo  spe RIGHT JOIN personinf pf on spe.peo_id = pf.id
+        WHERE
+        DATEDIFF(now(), create_time) &lt;= 7
+        ORDER BY
+        sale_sum DESC
+        LIMIT 5
+    </select>
+    <select id="findTop5AsYesterday" resultType="org.shiro.maven.vo.SalePeopleVo">
+        SELECT
+        pf.id as id,
+        pf.name as name ,
+        pf.sex as sex,
+        spe.sale_sum as sale_num,
+        pf.post_name as post_name
+        FROM
+        sale_peo  spe RIGHT JOIN personinf pf on spe.peo_id = pf.id
+        WHERE
+        DATEDIFF(now(), create_time) &lt;= 1
+        ORDER BY
+        sale_sum DESC
+        LIMIT 5
+    </select>
+
+</mapper>

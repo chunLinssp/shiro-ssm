@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "org.shiro.maven.mapper.ProduceMapper">
+
+    <insert id="saveProduce">
+        insert into produce_peo(peo_id
+        pro_sum,
+        create_time
+        )values
+        <foreach collection="list" item="item" separator="," close=";">
+            (#{item.peo_id},#{item.pro_sum},#{item.create_time})
+        </foreach>
+
+
+    </insert>
+</mapper>

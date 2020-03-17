@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "org.shiro.maven.mapper.PersoninfMapper">
+
+    <insert id="save">
+        insert into personinf(
+            post_name,
+            dep_id,
+            name,
+            sex,
+            phone,
+            address,
+            id_card,
+            work_start,
+            work_status,
+            image
+        )values
+        <foreach collection="list" item="item"  separator="," close=";">
+            (#{item.post_name},#{item.dep_id},#{item.name},
+            #{item.sex},#{item.phone},#{item.address},
+            #{item.id_card},#{item.work_start},#{item.work_status},#{item.image})
+        </foreach>
+
+    </insert>
+    <insert id="saveVo">
+        insert into personinf(
+        post_name,
+        dep_id,
+        name,
+        sex,
+        phone,
+        address,
+        id_card,
+        work_start,
+        work_status,
+        image
+        )values
+        <foreach collection="list" item="item"  separator="," close=";">
+            (#{item.post_name},#{item.dep_id},#{item.name},
+            #{item.sex},#{item.phone},#{item.address},
+            #{item.id_card},#{item.work_start},#{item.work_status},#{item.image})
+        </foreach>
+    </insert>
+
+
+    <update id="updateOne">
+        update personinf
+        <trim prefix="set" suffixOverrides=",">
+            <if test="post_name!=null"> post_name = #{post_name}, </if>
+            <if test="dep_id!=null"> dep_id = #{dep_id}, </if>
+            <if test="name!=null"> name = #{name}, </if>
+            <if test="sex!=null"> sex = #{sex} ,</if>
+            <if test="phone!=null"> phone = #{phone} ,</if>
+            <if test="address!=null"> address = #{address}, </if>
+            <if test="id_card!=null"> id_card = #{id_card}, </if>
+            <if test="work_start!=null"> work_start = #{work_start} ,</if>
+            <if test="work_status!=null"> phone = #{work_status} ,</if>
+            <if test="image!=null"> address = #{image}, </if>
+        </trim>
+        where id = #{id}
+    </update>
+    <delete id="delteOne">
+        delete from personinf where id = #{id}
+    </delete>
+
+    <select id="findById" resultType="org.shiro.maven.po.Personinf">
+        select * from personinf where id = #{id}
+    </select>
+    <select id="findAll" resultType="org.shiro.maven.po.Personinf">
+        select * from personinf
+    </select>
+
+    <resultMap id="personinfMap" type="org.shiro.maven.vo.PersoninfVo">
+        <result property="departmentName" column="departmentName"></result>
+        <result property="id" column="id"></result>
+        <result property="sex" column="sex"></result>
+        <result property="years" column="years"></result>
+        <result property="post_name" column="post_name"></result>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+
+    <select id="findAllPersoninfVo" resultMap="personinfMap">
+        SELECT
+            pf.id,
+            pf.`name` as name,
+            pf.sex,
+            pf.post_name ,
+            dp.`name` as departmentName,
+            DATEDIFF(Date(now()), work_start)as years
+        FROM
+            personinf pf
+        LEFT JOIN department dp ON pf.dep_id = dp.id
+    </select>
+    <select id="findVoById" resultType="org.shiro.maven.vo.PersoninfVo">
+        SELECT
+            pf.id,
+            pf.`name` as name,
+            pf.sex,
+            pf.post_name ,
+            dp.`name` as departmentName,
+            DATEDIFF(Date(now()), work_start)as years
+        FROM
+            personinf pf
+        LEFT JOIN department dp ON pf.dep_id = dp.id
+        where pf.id = #{id}
+    </select>
+</mapper>
