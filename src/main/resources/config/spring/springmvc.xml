@@ -23,7 +23,7 @@
         <property name="securityManager"><ref bean="securityManger"/></property>
     </bean>
     <mvc:annotation-driven/>
-
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
     <!--mvc的注解驱动器，通过它可以替代下边的处理器映射器和适配器-->
 <!--    <mvc:annotation-driven conversion-service="conversionService" validator="validator"></mvc:annotation-driven>-->
     <!--配置视图解析器

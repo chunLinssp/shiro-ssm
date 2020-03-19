@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
+import org.shiro.maven.annotation.LogAnnotation;
 import org.shiro.maven.common.constant.Result;
 import org.shiro.maven.common.utli.ResultApiHandler;
 import org.shiro.maven.po.*;
@@ -40,6 +41,7 @@ public class PersoninfController {
 
     @RequestMapping("/findAll")
     @RequiresPermissions("人事档案查询")
+    @LogAnnotation(module = "查询",operation = "人事档案查询")
     public String findAll(Model model, @RequestParam(defaultValue = "1",required = true,value="pageNo") Integer pageNo){
 
         Integer pageSize = 4;
@@ -68,7 +70,7 @@ public class PersoninfController {
     }
 
     @RequestMapping("/findAllByPage")
-    @RequiresPermissions(value = "查询所有工资条")
+    @RequiresPermissions(value = "人事档案查询")
     @ResponseBody
     public Result findAllByPage( @RequestParam(defaultValue = "1",required = true,value="pageNo") Integer pageNo){
         Integer pageSize = 4;

@@ -8,6 +8,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.subject.WebSubject;
+import org.shiro.maven.annotation.LogAnnotation;
 import org.shiro.maven.common.constant.Result;
 import org.shiro.maven.common.utli.ResultApiHandler;
 import org.shiro.maven.po.*;
@@ -39,6 +40,7 @@ public class FinancialController {
 
     @RequestMapping("/findAll")
     @RequiresPermissions(value = "查询所有工资条")
+    @LogAnnotation(module = "查询",operation = "工资条查询")
     public String findAll(Model model, @RequestParam(defaultValue = "1",required = true,value="pageNo") Integer pageNo){
         Integer pageSize = 4;
         PageHelper.startPage(pageNo,pageSize);

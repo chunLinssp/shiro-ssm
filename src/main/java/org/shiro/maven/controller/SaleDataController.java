@@ -3,6 +3,7 @@ package org.shiro.maven.controller;
 import org.shiro.maven.common.constant.Result;
 import org.shiro.maven.common.utli.ResultApiHandler;
 import org.shiro.maven.po.SalePeople;
+import org.shiro.maven.service.LogService;
 import org.shiro.maven.service.SaleService;
 import org.shiro.maven.vo.SalePeopleVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class SaleDataController {
 
     @Autowired
     SaleService saleService;
-
+   
     @ResponseBody
     @RequestMapping("/month")
     public Result saleFormonth(){

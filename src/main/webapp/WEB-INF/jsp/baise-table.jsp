@@ -195,9 +195,7 @@
     </script>
 
 </head>
-<div class="alert alert-success hide" id="modal-header">
-    <strong>成功!</strong> 指定操作成功提示信息。
-</div>
+
 <body class="fix-header card-no-border">
 
 <div class="preloader">
